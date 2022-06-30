@@ -112,3 +112,10 @@ add_executable (libpldm_utils_test ${TEST_UTILS})
 target_link_libraries(libpldm_utils_test ${GTEST_LIBRARIES} -lpthread)
 add_test (libpldm_utils_test libpldm_utils_test
           "--gtest_output=xml:libpldm_utils_test.xml")
+
+configure_file(
+    ${PROJECT_SOURCE_DIR}/libpldm-intel.pc.in
+    ${PROJECT_BINARY_DIR}/libpldm-intel.pc
+)
+INSTALL(FILES ${CMAKE_BINARY_DIR}/libpldm-intel.pc
+        DESTINATION lib/pkgconfig)
