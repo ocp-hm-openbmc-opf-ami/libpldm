@@ -1742,9 +1742,9 @@ int encode_set_state_effecter_enable_req(const uint8_t instance_id,
 		return PLDM_ERROR_INVALID_DATA;
 	}
 
-	int rc = rc = encode_pldm_header(instance_id, PLDM_PLATFORM,
-					 PLDM_SET_STATE_EFFECTER_ENABLE,
-					 PLDM_REQUEST, msg);
+	int rc = encode_pldm_header(instance_id, PLDM_PLATFORM,
+				    PLDM_SET_STATE_EFFECTER_ENABLE,
+				    PLDM_REQUEST, msg);
 	if (rc != PLDM_SUCCESS) {
 		return rc;
 	}

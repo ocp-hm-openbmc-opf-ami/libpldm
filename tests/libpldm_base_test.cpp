@@ -34,6 +34,9 @@ TEST(PackPLDMMessage, BadPathTest)
 
     // RESERVED message type
     hdr.msg_type = PLDM_RESERVED;
+    hdr.instance = 0;
+    hdr.pldm_type = 0;
+    hdr.command = 0;
     rc = pack_pldm_header(&hdr, &msg);
     EXPECT_EQ(rc, PLDM_ERROR_INVALID_DATA);
 
