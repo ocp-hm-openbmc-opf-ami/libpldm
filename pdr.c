@@ -679,16 +679,22 @@ pldm_entity_association_tree_find(pldm_entity_association_tree *tree,
 	return node;
 }
 
-void pldm_entity_association_pdr_extract(const uint8_t *pdr, uint16_t pdr_len,
+bool pldm_entity_association_pdr_extract(const uint8_t *pdr, uint16_t pdr_len,
 					 size_t *num_entities,
 					 pldm_entity **entities)
 {
-	assert(pdr != NULL);
-	assert(pdr_len >= sizeof(struct pldm_pdr_hdr) +
-			      sizeof(struct pldm_pdr_entity_association));
+	if (pdr == NULL) {
+		return false;
+	}
+	if (pdr_len < sizeof(struct pldm_pdr_hdr) +
+			  sizeof(struct pldm_pdr_entity_association)) {
+		return false;
+	}
 
 	struct pldm_pdr_hdr *hdr = (struct pldm_pdr_hdr *)pdr;
-	assert(hdr->type == PLDM_PDR_ENTITY_ASSOCIATION);
+	if (hdr->type != PLDM_PDR_ENTITY_ASSOCIATION) {
+		return false;
+	}
 
 	const uint8_t *start = (uint8_t *)pdr;
 	const uint8_t *end =
@@ -697,12 +703,19 @@ void pldm_entity_association_pdr_extract(const uint8_t *pdr, uint16_t pdr_len,
 	struct pldm_pdr_entity_association *entity_association_pdr =
 	    (struct pldm_pdr_entity_association *)start;
 	*num_entities = entity_association_pdr->num_children + 1;
-	assert(*num_entities >= 2);
+	if (*num_entities < 2) {
+		return false;
+	}
+	if (start + sizeof(struct pldm_pdr_entity_association) +
+		sizeof(pldm_entity) * (*num_entities - 2) !=
+	    end) {
+		return false;
+	}
 	*entities = malloc(sizeof(pldm_entity) * *num_entities);
-	assert(*entities != NULL);
-	assert(start + sizeof(struct pldm_pdr_entity_association) +
-		   sizeof(pldm_entity) * (*num_entities - 2) ==
-	       end);
+	if (*entities == NULL) {
+		return false;
+	}
+
 	(*entities)->entity_type =
 	    le16toh(entity_association_pdr->container.entity_type);
 	(*entities)->entity_instance_num =

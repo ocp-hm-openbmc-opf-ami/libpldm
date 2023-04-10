@@ -297,7 +297,7 @@ pldm_entity_association_tree_find(pldm_entity_association_tree *tree,
  *  @param[out] entities - extracted entities, container is *entities[0]. Caller
  *              must free *entities
  */
-void pldm_entity_association_pdr_extract(const uint8_t *pdr, uint16_t pdr_len,
+bool pldm_entity_association_pdr_extract(const uint8_t *pdr, uint16_t pdr_len,
 					 size_t *num_entities,
 					 pldm_entity **entities);
 
