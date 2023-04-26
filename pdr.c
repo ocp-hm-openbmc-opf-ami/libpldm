@@ -734,6 +734,7 @@ bool pldm_entity_association_pdr_extract(const uint8_t *pdr, uint16_t pdr_len,
 		++curr_entity;
 		++i;
 	}
+	return true;
 }
 
 static bool numeric_sensor_pdr_sensor_data_size_parse(
