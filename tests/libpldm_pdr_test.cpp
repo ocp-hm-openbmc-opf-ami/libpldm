@@ -1198,6 +1198,7 @@ TEST(EntityAssociationPDR, testExtract)
     size_t num{};
     pldm_entity* out = nullptr;
     pldm_entity_association_pdr_extract(pdr.data(), pdr.size(), &num, &out);
+    EXPECT_NE(out, nullptr);
     EXPECT_EQ(num, (unsigned)e->num_children + 1);
     EXPECT_EQ(out[0].entity_type, 1u);
     EXPECT_EQ(out[0].entity_instance_num, 1u);

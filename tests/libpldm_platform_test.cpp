@@ -2328,7 +2328,7 @@ TEST(SetStateEffecterEnables, testBadEncodeRequest)
                                               opFieldsInvalid.data(), msg);
     EXPECT_EQ(rc, PLDM_ERROR_INVALID_DATA);
 
-    uint8_t effecterEventMessageEnableInvalid = PLDM_ENABLE_EVENTS + 1;
+    uint8_t effecterEventMessageEnableInvalid = PLDM_DISABLE_EVENTS + 1;
     state_effecter_op_field opFieldInvalid2 = {
         effecterOperationalState, effecterEventMessageEnableInvalid};
     std::array<state_effecter_op_field, 2> opFieldsInvalid2 = {opField1,
