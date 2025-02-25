@@ -1237,6 +1237,10 @@ TEST(NumericSensorPDR, testParse)
     sensor_pdr->range_field_format = PLDM_RANGE_FIELD_FORMAT_UINT32;
     sensor_pdr->fatal_low.value_u32 = htole32(1122);
 
+    std::vector<uint8_t> res = {0x00, 00, 0xec, 0xc1}; // -29.5
+
+    memcpy(&sensor_pdr->resolution, res.data(), sizeof(float));
+
     std::vector<uint8_t> numeric_sensor_pdr(
         sizeof(pldm_numeric_sensor_value_pdr));
     bool status = pldm_numeric_sensor_pdr_parse(
@@ -1252,6 +1256,8 @@ TEST(NumericSensorPDR, testParse)
     EXPECT_EQ(sensor_pdr->supported_thresholds.byte, 10);
     EXPECT_EQ(sensor_pdr_out->hysteresis.value_u32, 1234u);
     EXPECT_EQ(sensor_pdr_out->fatal_low.value_u32, 1122u);
+
+    EXPECT_EQ(sensor_pdr->resolution, float(-29.5));
     // TODO: Add more test cases to validate different sensor data size and
     // range field formats
 }

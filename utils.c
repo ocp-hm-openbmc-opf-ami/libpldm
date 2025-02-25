@@ -1,5 +1,7 @@
 #include "utils.h"
 #include "base.h"
+#include <stdlib.h>
+#include <string.h>
 
 #include <stdio.h>
 
@@ -221,4 +223,12 @@ bool check_transfer_operation_flag_valid(const uint8_t transfer_operation_flag)
 	default:
 		return false;
 	}
+}
+
+void le32toh_float(void *x)
+{
+	uint32_t lx;
+	memcpy(&lx, x, sizeof(lx));
+	lx = le32toh(lx);
+	memcpy(x, &lx, sizeof(lx));
 }
