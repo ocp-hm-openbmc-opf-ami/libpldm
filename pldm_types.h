@@ -13,6 +13,7 @@ enum pldm_supported_types {
 	PLDM_FRU = 0x04,
 	PLDM_FWUP = 0x05,
 	PLDM_RDE = 0x06,
+	PLDM_FTP = 0x07,
 	PLDM_OEM = 0x3F,
 };
 
